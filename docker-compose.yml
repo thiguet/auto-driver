@@ -1,4 +1,5 @@
-version: '3.3'
+version: "3.7"
+
 services:
   server:
     build:
@@ -8,12 +9,46 @@ services:
         - http_proxy
         - https_proxy
         - no_proxy
-    image: 'auto-driver/server:latest'
+    image: "auto-driver/server:latest"
     ports:
-      - '8081:8081'
+      - "8081:8081"
     stdin_open: true
     tty: true
-  mongodb:
-    image: 'mongo:4.1'
+  auto-driver-postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: auto-driver
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: test123
     ports:
-      - '27017:27017'
+      - "15432:5432"
+    volumes:
+      - pg1:/var/lib/postgresql/data
+      - pg2:/etc/postgresql
+      - pg3:/var/log/postgresql
+    networks:
+      - auto-driver-network
+
+  auto-driver-pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "PgAdmin2019!"
+    ports:
+      - "16543:80"
+    depends_on:
+      - auto-driver-postgres
+    networks:
+      - auto-driver-network
+
+networks:
+  auto-driver-network:
+    driver: bridge
+
+volumes:
+  pg1:
+    driver: local
+  pg2:
+    driver: local
+  pg3:
+    driver: local
