@@ -1,7 +1,7 @@
 import {Env} from "@tsed/core";
 import {Configuration, Inject} from "@tsed/di";
 import {$log, PlatformApplication} from "@tsed/common";
-import "@tsed/platform-express"; // /!\ keep this import
+import "@tsed/platform-express";
 import bodyParser from "body-parser";
 import compress from "compression";
 import cookieParser from "cookie-parser";
@@ -9,8 +9,9 @@ import methodOverride from "method-override";
 import cors from "cors";
 import "@tsed/ajv";
 import "@tsed/swagger";
-
+import "@tsed/typeorm";
 import {IndexCtrl} from "./controllers/pages/IndexCtrl";
+import "dotenv/config";
 
 export const rootDir = __dirname;
 export const isProduction = process.env.NODE_ENV === Env.PROD;
@@ -37,22 +38,33 @@ if (isProduction) {
   rootDir,
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
-  httpsPort: false, // CHANGE
+  httpsPort: false,
   logger: {
     disableRoutesSummary: isProduction
   },
   mount: {
-    "/rest": [`${rootDir}/controllers/**/*.ts`],
+    "/v1": [`${rootDir}/controllers/**/*.ts`],
     "/": [IndexCtrl]
   },
   swagger: [
     {
-      path: "/v2/docs",
-      specVersion: "2.0"
-    },
-    {
-      path: "/v3/docs",
+      path: "/docs/v3",
       specVersion: "3.0.1"
+    }
+  ],
+  typeorm: [
+    {
+      host: `${process.env.DB_HOST}`,
+      port: parseInt(`${process.env.DB_PORT}`, 10),
+      username: `${process.env.DB_USER}`,
+      password: `${process.env.DB_PASS}`,
+      database: `${process.env.DB_NAME}`,
+      synchronize: true,
+      name: "default",
+      type: "postgres",
+      entities: [`${__dirname}/entity/*{.ts,.js}`],
+      migrations: [`${__dirname}/migrations/*{.ts,.js}`],
+      subscribers: [`${__dirname}/subscriber/*{.ts,.js}`]
     }
   ],
   views: {
