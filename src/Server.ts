@@ -37,8 +37,11 @@ if (isProduction) {
 const dbConfig = isProduction
   ? {
       url: `${process.env.DATABASE_URL}`,
+      ssl: true,
       extra: {
-        ssl: true
+        ssl: {
+          rejectUnauthorized: false
+        }
       }
     }
   : {
