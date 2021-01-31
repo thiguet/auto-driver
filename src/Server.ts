@@ -34,6 +34,21 @@ if (isProduction) {
   });
 }
 
+const dbConfig = isProduction
+  ? {
+      url: `${process.env.DATABASE_URL}`,
+      extra: {
+        ssl: true
+      }
+    }
+  : {
+      host: `${process.env.DB_HOST}`,
+      port: parseInt(`${process.env.DB_PORT}`, 10),
+      username: `${process.env.DB_USER}`,
+      password: `${process.env.DB_PASS}`,
+      database: `${process.env.DB_NAME}`
+    };
+
 @Configuration({
   rootDir,
   acceptMimes: ["application/json"],
@@ -54,17 +69,10 @@ if (isProduction) {
   ],
   typeorm: [
     {
-      host: `${process.env.DB_HOST}`,
-      port: parseInt(`${process.env.DB_PORT}`, 10),
-      username: `${process.env.DB_USER}`,
-      password: `${process.env.DB_PASS}`,
-      database: `${process.env.DB_NAME}`,
+      ...dbConfig,
       synchronize: true,
       name: "default",
       type: "postgres",
-      extra: {
-        ssl: process.env.ENV === "production" ? true : false
-      },
       entities: [`${__dirname}/entity/*{.ts,.js}`],
       migrations: [`${__dirname}/migrations/*{.ts,.js}`],
       subscribers: [`${__dirname}/subscriber/*{.ts,.js}`]
