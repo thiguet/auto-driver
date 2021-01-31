@@ -62,6 +62,9 @@ if (isProduction) {
       synchronize: true,
       name: "default",
       type: "postgres",
+      extra: {
+        ssl: process.env.ENV === "production" ? true : false
+      },
       entities: [`${__dirname}/entity/*{.ts,.js}`],
       migrations: [`${__dirname}/migrations/*{.ts,.js}`],
       subscribers: [`${__dirname}/subscriber/*{.ts,.js}`]
