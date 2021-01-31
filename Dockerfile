@@ -27,8 +27,8 @@ COPY ./* ./
 
 RUN npm run build
 
-EXPOSE 8081
-ENV PORT 8081
+EXPOSE 80
+ENV PORT 80
 ENV NODE_ENV production
 
 CMD ["node", "dist/index.js"]
