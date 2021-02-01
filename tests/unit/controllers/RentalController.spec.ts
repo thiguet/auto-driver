@@ -25,6 +25,13 @@ describe("Rental Controller", () => {
       fakeDate
     };
   };
+  it("must call getServersDate.", async () => {
+    const {instance} = await build();
+
+    const result = instance.getServersDate();
+
+    expect(result).toBe(new Date(result).toISOString());
+  });
 
   it("must call getFormerRental.", async () => {
     const {instance, fakeRentals, fakeRentalParams} = await build();
