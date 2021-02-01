@@ -21,7 +21,7 @@ describe("CarController", () => {
     };
   };
 
-  it("must call spyFindCarsByColorOrBrand.", async () => {
+  it("must call findCarsByColorOrBrand method.", async () => {
     const {instance, fakeCars} = await build();
 
     const color = faker.commerce.color();
@@ -35,7 +35,7 @@ describe("CarController", () => {
     expect(result).toEqual(fakeCars);
   });
 
-  it("must call spyFindOneOrFail.", async () => {
+  it("must call findOneOrFail method.", async () => {
     const {instance, fakeCar, fakeId} = await build();
 
     const spyFindOneOrFail = jest.spyOn(instance.carRepo, "findOneOrFail").mockResolvedValue(fakeCar);
@@ -46,7 +46,7 @@ describe("CarController", () => {
     expect(result).toEqual(fakeCar);
   });
 
-  it("must call spySave.", async () => {
+  it("must call repo's save method.", async () => {
     const {instance, fakeCar} = await build();
     const spySave = jest.spyOn(instance.carRepo, "save").mockResolvedValue(fakeCar);
 
@@ -56,7 +56,7 @@ describe("CarController", () => {
     expect(result).toEqual(fakeCar);
   });
 
-  it("must call spyUpdate.", async () => {
+  it("must call repo's update method.", async () => {
     const {instance, fakeCar, fakeId} = await build();
 
     const spyFind = jest.spyOn(instance.carRepo, "findOneOrFail").mockResolvedValue(fakeCar);
@@ -73,7 +73,7 @@ describe("CarController", () => {
     expect(result).toEqual(fakeCar);
   });
 
-  it("must call spyDelete.", async () => {
+  it("must call repo's delete method.", async () => {
     const {instance, fakeCar, fakeId} = await build();
 
     const spyFind = jest.spyOn(instance.carRepo, "findOneOrFail").mockResolvedValue(fakeCar);

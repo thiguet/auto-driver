@@ -21,7 +21,7 @@ describe("DriverController", () => {
     };
   };
 
-  it("must call findDriversByName.", async () => {
+  it("must call findDriversByName method.", async () => {
     const {instance, fakeDrivers} = await build();
 
     const name = faker.name.firstName();
@@ -34,7 +34,7 @@ describe("DriverController", () => {
     expect(result).toEqual(fakeDrivers);
   });
 
-  it("must call findOneOrFail.", async () => {
+  it("must call findOneOrFail method.", async () => {
     const {instance, fakeDriver, fakeId} = await build();
 
     const spyFindOneOrFail = jest.spyOn(instance.driverRepo, "findOneOrFail").mockResolvedValue(fakeDriver);
@@ -45,7 +45,7 @@ describe("DriverController", () => {
     expect(result).toEqual(fakeDriver);
   });
 
-  it("must call repo's save.", async () => {
+  it("must call repo's save method.", async () => {
     const {instance, fakeDriver} = await build();
     const spySave = jest.spyOn(instance.driverRepo, "save").mockResolvedValue(fakeDriver);
 
@@ -55,7 +55,7 @@ describe("DriverController", () => {
     expect(result).toEqual(fakeDriver);
   });
 
-  it("must call repo's update.", async () => {
+  it("must call repo's update method.", async () => {
     const {instance, fakeDriver, fakeId} = await build();
 
     const spyFind = jest.spyOn(instance.driverRepo, "findOneOrFail").mockResolvedValue(fakeDriver);
@@ -72,7 +72,7 @@ describe("DriverController", () => {
     expect(result).toEqual(fakeDriver);
   });
 
-  it("must call repo's delete.", async () => {
+  it("must call repo's delete method.", async () => {
     const {instance, fakeDriver, fakeId} = await build();
 
     const spyFind = jest.spyOn(instance.driverRepo, "findOneOrFail").mockResolvedValue(fakeDriver);

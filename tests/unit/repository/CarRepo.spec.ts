@@ -49,7 +49,7 @@ describe("Car Repo", () => {
     expect(result).toEqual(fakeCars);
   });
 
-  it("must return fakeCars with filters.", async () => {
+  it("must return fakeCars with filters (only brand).", async () => {
     const {instance, fakeCars} = await build();
 
     const brand = faker.company.companyName();
