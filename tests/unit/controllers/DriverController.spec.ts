@@ -34,7 +34,7 @@ describe("DriverController", () => {
     expect(result).toEqual(fakeDrivers);
   });
 
-  it("must call spyFindOneOrFail.", async () => {
+  it("must call findOneOrFail.", async () => {
     const {instance, fakeDriver, fakeId} = await build();
 
     const spyFindOneOrFail = jest.spyOn(instance.driverRepo, "findOneOrFail").mockResolvedValue(fakeDriver);
@@ -45,7 +45,7 @@ describe("DriverController", () => {
     expect(result).toEqual(fakeDriver);
   });
 
-  it("must call spySave.", async () => {
+  it("must call repo's save.", async () => {
     const {instance, fakeDriver} = await build();
     const spySave = jest.spyOn(instance.driverRepo, "save").mockResolvedValue(fakeDriver);
 
@@ -55,7 +55,7 @@ describe("DriverController", () => {
     expect(result).toEqual(fakeDriver);
   });
 
-  it("must call spyUpdate.", async () => {
+  it("must call repo's update.", async () => {
     const {instance, fakeDriver, fakeId} = await build();
 
     const spyFind = jest.spyOn(instance.driverRepo, "findOneOrFail").mockResolvedValue(fakeDriver);
@@ -72,7 +72,7 @@ describe("DriverController", () => {
     expect(result).toEqual(fakeDriver);
   });
 
-  it("must call spyDelete.", async () => {
+  it("must call repo's delete.", async () => {
     const {instance, fakeDriver, fakeId} = await build();
 
     const spyFind = jest.spyOn(instance.driverRepo, "findOneOrFail").mockResolvedValue(fakeDriver);

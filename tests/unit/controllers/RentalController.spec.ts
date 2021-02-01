@@ -92,7 +92,7 @@ describe("Rental Controller", () => {
 
     jest.spyOn(instance.rentalRepo, "findLastRental").mockResolvedValue(undefined);
 
-    expect(instance.create(fakeRentalParams)).rejects.toEqual(new ResourceNotFound("Rental not found or already closed!"));
+    expect(instance.finishRental(fakeRentalParams)).rejects.toEqual(new ResourceNotFound("Rental not found or already closed!"));
   });
 
   it("must call findAllRentals", async () => {

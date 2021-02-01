@@ -17,9 +17,9 @@ describe("Rental Repo", () => {
     const fakeId = faker.random.number({min: 0});
 
     jest.spyOn(instance, "createQueryBuilder").mockReturnValue(({
-      where: jest.fn().mockReturnThis(),
       leftJoinAndSelect: jest.fn().mockReturnThis(),
       innerJoinAndSelect: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
       orWhere: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue(fakeRentals),
