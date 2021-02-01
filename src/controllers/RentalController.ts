@@ -1,5 +1,5 @@
 import {BodyParams, Controller, Get, Inject, Patch, Post, ResourceNotFound} from "@tsed/common";
-import {Rental as RentalRepo} from "../repository/Rental";
+import {RentalRepo as RentalRepo} from "../repository/RentalRepo";
 import {Rental} from "../entity/Rental";
 import {RentalParams} from "../entity/RentalParams";
 import {Returns} from "@tsed/schema";
@@ -9,16 +9,20 @@ import {BadRequest} from "@tsed/exceptions";
 @Controller("/rentals")
 export class RentalController {
   @Inject()
-  private rentalRepo: RentalRepo;
+  public rentalRepo: RentalRepo;
 
   async getFormerRental(rentalParams: RentalParams): Promise<Rental[]> {
-    return await this.rentalRepo.findIfDriverCanRentTheCar(rentalParams);
+    return await this.rentalRepo.findOpenedFormerCarRents(rentalParams);
+  }
+
+  getServersDate(): Rental["endDate"] {
+    return new Date().toISOString();
   }
 
   @Post()
   @Returns(200, Rental)
   @Returns(400, BadRequest)
-  async save(@BodyParams() rentalParams: RentalParams): Promise<Rental> {
+  async create(@BodyParams() rentalParams: RentalParams): Promise<Rental> {
     const rentalData = await this.getFormerRental(rentalParams);
 
     if (rentalData && rentalData.length) {
@@ -32,8 +36,8 @@ export class RentalController {
 
     return await this.rentalRepo.save({
       ...rentalParams,
-      driver: {id: parseInt(rentalParams.driverId)},
-      car: {id: parseInt(rentalParams.carId)}
+      driver: {id: rentalParams.driverId},
+      car: {id: rentalParams.carId}
     });
   }
 
@@ -49,13 +53,13 @@ export class RentalController {
 
     return this.rentalRepo.save({
       ...rentalData,
-      endDate: new Date().toISOString()
+      endDate: this.getServersDate()
     });
   }
 
   @Get()
   @Returns(200, Rental)
-  async get(): Promise<Rental[]> {
+  async findAll(): Promise<Rental[]> {
     return await this.rentalRepo.findAllRentals();
   }
 }

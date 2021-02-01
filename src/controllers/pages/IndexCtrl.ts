@@ -11,7 +11,10 @@ export class IndexCtrl {
   @Get("/")
   @View("index.ejs")
   @(Returns(200, String).ContentType("text/html"))
-  get(@HeaderParams("x-forwarded-proto") protocol: string, @HeaderParams("host") host: string) {
+  get(
+    @HeaderParams("x-forwarded-proto") protocol: string,
+    @HeaderParams("host") host: string
+  ): {BASE_URL: string; docs: SwaggerSettings[]} {
     const hostUrl = `${protocol || "http"}://${host}`;
 
     return {

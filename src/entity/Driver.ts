@@ -20,5 +20,5 @@ export class Driver {
   name: string;
 
   @OneToMany(() => Rental, (rental) => rental.car)
-  public rental!: Rental[];
+  rental!: Rental[];
 }

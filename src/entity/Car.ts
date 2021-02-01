@@ -37,5 +37,5 @@ export class Car {
   brand: string;
 
   @OneToMany(() => Rental, (rental) => rental.car)
-  public rental!: Car[];
+  rental!: Rental[];
 }

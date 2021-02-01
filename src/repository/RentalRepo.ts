@@ -4,8 +4,8 @@ import {Rental as RentalEntity} from "../entity/Rental";
 import {RentalParams} from "../entity/RentalParams";
 
 @EntityRepository(RentalEntity)
-export class Rental extends Repository<RentalEntity> {
-  findIfDriverCanRentTheCar({driverId, carId}: RentalParams): Promise<RentalEntity[]> {
+export class RentalRepo extends Repository<RentalEntity> {
+  findOpenedFormerCarRents({driverId, carId}: RentalParams): Promise<RentalEntity[]> {
     return this.createQueryBuilder("rental")
       .leftJoinAndSelect("rental.driver", "driver")
       .leftJoinAndSelect("rental.car", "car")

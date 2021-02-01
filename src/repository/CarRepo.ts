@@ -2,8 +2,8 @@ import {EntityRepository, Repository} from "typeorm";
 import {Car as CarEntity} from "../entity/Car";
 
 @EntityRepository(CarEntity)
-export class Car extends Repository<CarEntity> {
-  async findCarsByColorOrBrand(color: CarEntity["color"], brand: CarEntity["brand"]): Promise<CarEntity[]> {
+export class CarRepo extends Repository<CarEntity> {
+  async findCarsByColorOrBrand(color?: CarEntity["color"], brand?: CarEntity["brand"]): Promise<CarEntity[]> {
     const query = this.createQueryBuilder("car");
 
     if (color) {
