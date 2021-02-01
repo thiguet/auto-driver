@@ -1,6 +1,10 @@
 import {Description, Example, MaxLength, Property, Required, Title} from "@tsed/schema";
-import {Column, Entity, PrimaryGeneratedColumn, OneToMany} from "typeorm";
+import {Column, Entity, PrimaryGeneratedColumn, OneToMany, ObjectType} from "typeorm";
 import {Rental} from "./Rental";
+
+export const targetFn = (): ObjectType<Rental> => Rental;
+
+export const inverseSideFn = (rental: Rental): Driver => rental.driver;
 
 export class NewDriver {
   @Title("Driver's name")
@@ -11,7 +15,7 @@ export class NewDriver {
   @Required()
   name: string;
 
-  @OneToMany(() => Rental, (rental) => rental.car)
+  @OneToMany(targetFn, inverseSideFn)
   rental!: Rental[];
 }
 

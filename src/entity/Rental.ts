@@ -1,8 +1,15 @@
 import {Description, Example, Maximum, Minimum, Property, Required, Title} from "@tsed/schema";
-import {Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn} from "typeorm";
+import {Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, ObjectType} from "typeorm";
 import {Car} from "./Car";
 import {Driver} from "./Driver";
 
+export const carTargetFn = (): ObjectType<Car> => Car;
+
+export const carInverseSideFn = (car: Car): Rental[] => car.rental;
+
+export const driverTargetFn = (): ObjectType<Driver> => Driver;
+
+export const driverInverseSideFn = (driver: Driver): Rental[] => driver.rental;
 @Entity()
 export class Rental {
   @Title("Rental's id")
@@ -34,12 +41,12 @@ export class Rental {
   @Maximum(255)
   motive: string;
 
-  @ManyToOne(() => Car, (car: Car) => car.rental, {nullable: true})
+  @ManyToOne(carTargetFn, carInverseSideFn, {nullable: true})
   @JoinColumn()
   @Required()
   car!: Car;
 
-  @ManyToOne(() => Driver, (driver: Driver) => driver.rental, {nullable: true})
+  @ManyToOne(driverTargetFn, driverInverseSideFn, {nullable: true})
   @JoinColumn()
   @Required()
   driver!: Driver;
