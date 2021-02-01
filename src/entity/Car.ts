@@ -2,15 +2,7 @@ import {Description, Example, Maximum, MaxLength, Minimum, Property, Required, T
 import {Column, Entity, PrimaryGeneratedColumn, OneToMany} from "typeorm";
 import {Rental} from "./Rental";
 
-@Entity()
-export class Car {
-  @Title("Id")
-  @Description("Car id")
-  @Example("1")
-  @PrimaryGeneratedColumn()
-  @Property()
-  id: number;
-
+export class NewCar {
   @Title("Plate")
   @Description("The plate of the car. Up to 7 digits only.")
   @Example("ASD1456")
@@ -38,4 +30,13 @@ export class Car {
 
   @OneToMany(() => Rental, (rental) => rental.car)
   rental!: Rental[];
+}
+@Entity()
+export class Car extends NewCar {
+  @Title("Id")
+  @Description("Car id")
+  @Example("1")
+  @PrimaryGeneratedColumn()
+  @Property()
+  id?: number;
 }

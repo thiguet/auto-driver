@@ -1,7 +1,7 @@
 import {BodyParams, Controller, Delete, Get, Inject, PathParams, Post, Put, QueryParams} from "@tsed/common";
 import {Returns} from "@tsed/schema";
 import {CarRepo} from "../repository/CarRepo";
-import {Car} from "../entity/Car";
+import {Car, NewCar} from "../entity/Car";
 
 @Controller("/cars")
 export class CarController {
@@ -10,8 +10,8 @@ export class CarController {
 
   @Post()
   @Returns(200, Car)
-  async create(@BodyParams() car: Car): Promise<Car> {
-    return await this.carRepo.save(car);
+  async create(@BodyParams() car: NewCar): Promise<Car> {
+    return await this.carRepo.save({...car});
   }
 
   @Get("/:id")
