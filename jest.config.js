@@ -20,7 +20,7 @@ module.exports = {
 
   testEnvironment: "node",
 
-  testMatch: ["**/tests/**/*.[jt]s?(x)", "**/tests/**/?(*.)+(spec|test).[tj]s?(x)"],
+  testMatch: ["**/tests/**/*.spec.[jt]s?(x)", "**/tests/**/?(*.)+(spec|test).[tj]s?(x)"],
   transform: {
     "\\.(ts)$": "ts-jest"
   }
